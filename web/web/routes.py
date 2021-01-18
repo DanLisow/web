@@ -3,4 +3,6 @@ def includeme(config):
     config.add_route('home', '/')
     config.add_route('add', '/add')
     config.add_route('create', '/create')
-    config.add_route('users', '/users')
+    config.add_route('delete', '/delete')
+    config.add_route('update', '/update')
+    config.add_route('notes', '/notes')

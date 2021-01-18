@@ -1,6 +1,6 @@
 from pyramid.config import Configurator
 from pyramid.response import Response
-from .models import User, Session, Base, engine
+from .models import Note, Session, Base, engine
 
 
 def main(global_config, **settings):
