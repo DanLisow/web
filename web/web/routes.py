@@ -6,3 +6,5 @@ def includeme(config):
     config.add_route('delete', '/delete')
     config.add_route('update', '/update')
     config.add_route('notes', '/notes')
+    config.add_route('sign_in', '/sign_in')
+    config.add_route('login', '/login')

@@ -3,6 +3,8 @@ from pyramid.response import Response
 from .models import Note, Session, Base, engine
 
 
+
+
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
