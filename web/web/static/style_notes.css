@@ -347,6 +347,7 @@ h6 {
 
 .notes__block-text {
     overflow-y: scroll;
+    transition: all 0.3s;
     height: 450px;
 }
 
@@ -354,8 +355,16 @@ h6 {
     font-size: 16px;
     line-height: 160%;
     color: #212121;
+    padding: 15px 15px 15px 0;
+    transition: all 0.3s;
     word-break: break-all;
     cursor: text;
+}
+
+.notes__block-text p:focus {
+    outline: #375ce0;
+    border: 1px solid #375ce0;
+    border-radius: 6px;
 }
 
 .notes__block-text p:not(:last-child) {
@@ -566,4 +575,106 @@ h6 {
     .modal-xl {
         max-width: 1140px;
     }
+}
+
+/* ========================= */
+
+.form__main {
+    display: flex;
+    justify-content: center;
+    margin-top: 65px;
+}
+
+.form__input,
+.form__button {
+    font-size: 16px;
+}
+
+.form__input {
+    padding: 0 0 0 20px;
+    margin-right: 23px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f3f3f3;
+    outline: none;
+    transition: 0.3s;
+    width: 225px;
+    height: 45px;
+    font-family: "Raleway", sans-serif;
+    font-size: 16px;
+}
+
+::placeholder {
+    color: #9a9a9a;
+}
+
+.form__input:focus {
+    border-bottom: 2px solid #375ce0;
+}
+
+.form__button {
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #375ce0;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 185px;
+    height: 45px;
+}
+
+.form__button:focus,
+.form__button:hover {
+    background-color: #2b49b4;
+}
+
+.form__subtext {
+    margin-top: 35px;
+    text-align: center;
+    font-size: 14px;
+    color: #9e9e9e;
+}
+
+.link {
+    text-decoration: none;
+    color: #375ce0;
+    font-size: 14px;
+}
+
+/* Pop-up */
+.form__popup {
+    margin-top: 25px;
+}
+
+.popup__title {
+    margin: 0 0 30px 0;
+    font-size: 30px;
+}
+
+.popup_image {
+    margin-top: 30px;
+    height: 300px;
+}
+
+.popup__group {
+    margin-bottom: 20px;
+}
+
+.modal__inner {
+    display: flex;
+    flex-direction: row;
+}
+
+.modal .modal-dialog {
+    max-width: 630px !important;
+}
+
+.modal .modal-dialog .modal-body {
+    padding: 32px 32px 16px 32px;
+}
+
+.close {
+    position: absolute;
+    margin-left: 540px;
 }

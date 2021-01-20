@@ -14,7 +14,7 @@ class Note(Base):
     id = Column(Integer, primary_key=True)
     title = Column(Text)
     text = Column(Text)
-    # user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
 
     def __init__(self, title, text):
         self.title = title
