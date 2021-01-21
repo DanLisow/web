@@ -15,15 +15,18 @@
     <header class="header">
         <div class="container">
             <div class="header__inner">
-                <a href="#"><img class="logo" src="../static/assets/logo.svg" alt="Note you"></a>
+                <a href="/"><img class="logo" src="../static/assets/logo.svg" alt="Note you"></a>
                 <nav class="nav__main">
                     <a class="nav__link" href="#">Our product</a>
                     <a class="nav__link" href="#">Pricing</a>
                     <a class="nav__link" href="#">Download</a>
                     <a class="nav__link" href="#">Team</a>
                     <a class="nav__line">|</a>
-                    <a class="nav__auth" href="#" data-toggle="modal" data-target="#login-modal">Log in</a>
-                    <a class="nav__auth" href="#" data-toggle="modal" data-target="#signin-modal">Sign up</a>
+                    {% if ((log_in) == True) : %}
+                        {% include 'log_in_nav.html' %}
+                    {% else %}
+                        {% include 'not_log_in_nav.html' %}
+                    {% endif %}
                 </nav>
             </div>
         </div>
@@ -40,7 +43,7 @@
                     <input class="form__input" type="password" name="password" placeholder="Password">
                     <button class="form__button sign" type="submit">Sign up</button>
                 </form>
-                <p class="form__subtext">Already have an account? <a class="link" href="#">Log in</a></p>
+                <p class="form__subtext">Already have an account? <a class="link" href="#" data-toggle="modal" data-target="#login-modal">Log in</a></p>
             </div>
         </div>
     </div>
@@ -48,9 +51,9 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="close">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     <div class="modal__inner">
                         <form class="form__popup" action="/sign_in" method="POST">
                             <h2 class="popup__title">Sign Up, Bro!</h2>
@@ -72,9 +75,9 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="close">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     <div class="modal__inner">
                         <form class="form__popup" action="/login" method="POST">
                             <h2 class="popup__title">Log in, Bro!</h2>

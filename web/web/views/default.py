@@ -9,13 +9,29 @@ from sqlalchemy.sql import exists
 DBSession = Session(bind=engine)
 
 
+def check_login(request) -> bool:
+    try:
+        if(request.session['log_in']):
+            return True
+        else:
+            return False
+    except Exception as err:
+        print("Error", str(err))
+        return False
+
+
 @view_config(route_name='home')
 def MainPage(request):
-    return render_to_response('templates/index.jinja2', {'title': 'Welcome to NoteYou'}, request=request)
+    if check_login(request):
+        return render_to_response('templates/index.jinja2', {'title': 'Welcome to NoteYou', 'log_in': True}, request=request)
+    else:
+        return render_to_response('templates/index.jinja2', {'title': 'Welcome to NoteYou', 'log_in': False}, request=request)
+
 
 @view_config(route_name='add')
 def add_render(request):
-    return render_to_response('templates/add.jinja2', {'success' : 'success'}, request=request)
+    return render_to_response('templates/add.jinja2', {'success': 'success'}, request=request)
+
 
 @view_config(route_name='sign_in')
 def SignIn(request):
@@ -42,6 +58,7 @@ def SignIn(request):
         print("Error", str(err))
         return Response("Произошла ошибка")
 
+
 @view_config(route_name='login')
 def login(request):
 
@@ -54,6 +71,7 @@ def login(request):
             return HTTPFound(location="/")
         else:
             DBSession.commit()
+            request.session['log_in'] = True
             return HTTPFound(location='/notes')
 
     except Exception as err:
@@ -61,9 +79,13 @@ def login(request):
         return Response("Произошла ошибка")
 
 
-    
-# ============= CRUD =================
+@view_config(route_name='logout')
+def logout(request):
+    request.session['log_in'] = False
+    return HTTPFound(location='/')
 
+
+# ============= CRUD =================
 
 
 @view_config(route_name='create')
@@ -79,11 +101,13 @@ def create_user(request):
     except:
         return Response("Произошла ошибка")
 
+
 @view_config(route_name='delete')
 def delete_user(request):
 
     try:
-        note = DBSession.query(Note).filter(Note.id == request.params['id']).first()
+        note = DBSession.query(Note).filter(
+            Note.id == request.params['id']).first()
         DBSession.delete(note)
         DBSession.commit()
         return HTTPFound(location='/notes')
@@ -95,21 +119,24 @@ def delete_user(request):
 def update_user(request):
 
     try:
-        note = DBSession.query(Note).filter(Note.id == request.params['id']).first()
+        note = DBSession.query(Note).filter(
+            Note.id == request.params['id']).first()
         setattr(note, 'text', request.params['text'])
         DBSession.commit()
         return HTTPFound(location='/notes')
     except:
         return Response("Произошла ошибка")
 
+
 @view_config(route_name='notes')
 def users_render(request):
 
     try:
-        notes_list = DBSession.query(Note).all()
-        DBSession.commit()
-        return render_to_response('templates/notes.jinja2', {'notes' : notes_list}, request=request)
+        if check_login(request):
+            notes_list = DBSession.query(Note).all()
+            DBSession.commit()
+            return render_to_response('templates/notes.jinja2', {'notes': notes_list, 'title': 'My Notes'}, request=request)
+        else:
+            return Response("Вы не вошли в систему")
     except:
         return Response("Произошла ошибка")
-
-
