@@ -123,6 +123,7 @@ def update_user(request):
         note = DBSession.query(Note).filter(
             Note.id == request.params['id']).first()
         setattr(note, 'text', request.params['text'])
+        setattr(note, 'title', request.params['title'])
         DBSession.commit()
         return HTTPFound(location='/notes')
     except:

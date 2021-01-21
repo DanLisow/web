@@ -26,7 +26,7 @@
         <div class="container">
             <div class="notes__inner">
                 <h1 class="notes__title">
-                    All notes <small>({{notes|count}})</small>
+                    All notes <!--<small>({{notes|count}})</small>-->
                 </h1>
                 <div class="notes__main">
 
@@ -43,15 +43,19 @@
                                 {% if loop.first %}
 
                                 <li class="notes__item nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#home-{{note.id}}">{{note.title}}</a>
-                                    <p>{{note.text}}</p>
+                                    <a class="nav-link active" data-toggle="tab" href="#home-{{note.id}}">
+                                        {{note.title}}
+                                        <p>{{note.text}}</p>
+                                    </a>
                                 </li>
 
                                 {% else %}
 
                                 <li class="notes__item nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#home-{{note.id}}">{{note.title}}</a>
-                                    <p>{{note.text}}</p>
+                                    <a class="nav-link" data-toggle="tab" href="#home-{{note.id}}">
+                                        {{note.title}}
+                                        <p>{{note.text}}</p>
+                                    </a>
                                 </li>
 
                                 {% endif %}
@@ -225,8 +229,10 @@
         $('form').on('mouseover', function () {
 
             let text = $(this).find('p');
+            let title = $(this).find('h3');
             let form = $(this);
-            let input = form.find("input[name=text]");
+            let input1 = form.find("input[name=text]");
+            let input2 = form.find("input[name=title]");
 
             text.on('mousedown', function (e) {
 
@@ -234,7 +240,20 @@
 
                 text.on('mouseout', function (e) {
 
-                    input.val(text[0].innerText);
+                    input1.val(text[0].innerText);
+                    $(this).removeAttr('contenteditable');
+
+                });
+
+            });
+
+            title.on('mousedown', function (e) {
+
+                $(this).attr('contenteditable', 'true');
+
+                title.on('mouseout', function (e) {
+
+                    input2.val(title[0].innerText);
                     $(this).removeAttr('contenteditable');
 
                 });
