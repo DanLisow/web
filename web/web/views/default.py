@@ -68,10 +68,11 @@ def login(request):
 
         if(query is None):
             DBSession.commit()
-            return HTTPFound(location="/")
+            return Response("Вы еще не зарегистрированы")
         else:
             DBSession.commit()
             request.session['log_in'] = True
+            request.session['user_id'] = query.id
             return HTTPFound(location='/notes')
 
     except Exception as err:
@@ -94,7 +95,7 @@ def create_user(request):
     try:
         title = request.params['title']
         text = request.params['text']
-        note = Note(title=title, text=text)
+        note = Note(title=title, text=text, user_id=request.session['user_id'])
         DBSession.add(note)
         DBSession.commit()
         return HTTPFound(location='/notes')
@@ -133,7 +134,8 @@ def users_render(request):
 
     try:
         if check_login(request):
-            notes_list = DBSession.query(Note).all()
+            notes_list = DBSession.query(Note).filter(
+                request.session['user_id'] == Note.user_id).all()
             DBSession.commit()
             return render_to_response('templates/notes.jinja2', {'notes': notes_list, 'title': 'My Notes'}, request=request)
         else:
